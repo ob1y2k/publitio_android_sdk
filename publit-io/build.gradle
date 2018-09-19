@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'Publitio'
+    bintrayName = 'publit-io'
+
+    publishedGroupId = 'com.publit.io'
+    libraryName = 'Publitio'
+    artifact = 'publit-io'
+
+    libraryDescription = 'Android SDK for publit.io api\'s'
+
+    siteUrl = 'http://gitlab.galaxyweblinks.in/root/publitiosdk'
+    gitUrl = 'http://gitlab.galaxyweblinks.in/root/publitiosdk.git'
+
+    libraryVersion = '0.0.1'
+
+    developerId = 'gwl'
+    developerName = 'gwl'
+    developerEmail = 'akshay.khandelwal@galaxyweblinks.in'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation('com.android.support:appcompat-v7:27.1.1') {
+        exclude module: 'support-annotations'
+    }
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compile 'com.squareup.retrofit2:retrofit:2.4.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.4.0'
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
