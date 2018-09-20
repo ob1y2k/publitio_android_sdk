@@ -1,23 +1,23 @@
 apply plugin: 'com.android.library'
 
 ext {
-    bintrayRepo = 'Publitio'
-    bintrayName = 'publit-io'
+    bintrayRepo = 'publitio-android-sdk'
+    bintrayName = 'publitio_android_sdk'
 
     publishedGroupId = 'com.publit.io'
-    libraryName = 'Publitio'
+    libraryName = 'publitio-android-sdk'
     artifact = 'publit-io'
 
-    libraryDescription = 'Android SDK for publit.io api\'s'
+    libraryDescription = 'Simple Android SDK for Publitio'
 
-    siteUrl = 'http://gitlab.galaxyweblinks.in/root/publitiosdk'
-    gitUrl = 'http://gitlab.galaxyweblinks.in/root/publitiosdk.git'
+    siteUrl = 'https://github.com/ob1y2k/publitio_android_sdk'
+    gitUrl = 'https://github.com/ob1y2k/publitio_android_sdk.git'
 
     libraryVersion = '0.0.1'
 
-    developerId = 'gwl'
-    developerName = 'gwl'
-    developerEmail = 'akshay.khandelwal@galaxyweblinks.in'
+    developerId = 'publitio'
+    developerName = 'publitio'
+    developerEmail = 'publitioapi@gmail.com'
 
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
