@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/ob1y2k/publitio_android_sdk'
     gitUrl = 'https://github.com/ob1y2k/publitio_android_sdk.git'
 
-    libraryVersion = '0.0.1'
+    libraryVersion = '0.0.2'
 
     developerId = 'publitio'
     developerName = 'publitio'
@@ -56,6 +56,12 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.4.0'
     compile 'com.squareup.retrofit2:converter-gson:2.4.0'
     compileOnly 'javax.annotation:jsr250-api:1.0'
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
