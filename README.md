@@ -6,7 +6,7 @@ Sample app will return JSON response for functions like
 
 File Create > Upload
 
-```php
+```json
 {"success":true,"code":201,"message":"File uploaded","id":"i0haVus5","public_id":null,"title":"IMG_20180924_125120","description":"","tags":"","type":"image","extension":"jpg","size":200602,"width":960,"height":1280,"privacy":"public","option_download":"disabled","option_ad":"enabled","option_transform":"disabled","wm_id":null,"url_preview":"https://media.publit.io/file/i0haVus5.jpg","versions":0,"hits":0,"created_at":"2018-10-01 11:43:44","updated_at":"2018-10-01 11:43:44"}d_at":"2018-10-01 11:38:21","updated_at":"2018-10-01 11:38:21"}
 
 Or visit link for preaty version
