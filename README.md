@@ -73,6 +73,13 @@ Initialize Publitio SDK
  mPublitio = new Publitio(this);
 ```   
 
+For detailed instructions about API usage and options please visit
+
+https://publit.io/docs/
+
+All functions of api for web are available for mobile SDK.
+
+
 
 In Demo app you will find FilesActivity class with specific calls that are in test app.
 
