@@ -59,6 +59,7 @@ public class PublitioPlayers {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (optionalParams != null) {
             for (Map.Entry<String, String> entry : optionalParams.entrySet()) {
@@ -113,6 +114,7 @@ public class PublitioPlayers {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
             Call<JsonObject> call = apiService.callPlayersList(apiParams);
@@ -162,6 +164,7 @@ public class PublitioPlayers {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
             Call<JsonObject> call = apiService.callShowPlayer(playerID, apiParams);
@@ -216,6 +219,7 @@ public class PublitioPlayers {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (optionalParams != null) {
             for (Map.Entry<String, String> entry : optionalParams.entrySet()) {
@@ -270,6 +274,7 @@ public class PublitioPlayers {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
             Call<JsonObject> call = apiService.callDeletePlayer(playerID, apiParams);

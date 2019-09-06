@@ -91,6 +91,9 @@ public interface ApiInterface {
     @PUT("v1/files/versions/update/{id}")
     Call<JsonObject> callUpdateVersion(@Path("id") String id, @QueryMap Map<String, String> options);
 
+    @PUT("v1/files/versions/reconvert/{id}")
+    Call<JsonObject> callReconvertVersion(@Path("id") String id, @QueryMap Map<String, String> options);
+
     @DELETE("v1/files/versions/delete/{id}")
     Call<JsonObject> callDeleteVersion(@Path("id") String id, @QueryMap Map<String, String> options);
 }

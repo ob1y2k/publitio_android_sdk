@@ -64,6 +64,7 @@ public class PublitioVersions {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (optionalParams != null) {
             if (optionalParams.get(CreateVersionParams.RESIZING_WIDTH) != null && !optionalParams.get(CreateVersionParams.RESIZING_WIDTH).isEmpty()) {
@@ -162,6 +163,7 @@ public class PublitioVersions {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (optionalParams != null) {
             for (Map.Entry<String, String> entry : optionalParams.entrySet()) {
@@ -217,6 +219,7 @@ public class PublitioVersions {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
 
@@ -265,6 +268,7 @@ public class PublitioVersions {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
 
@@ -294,6 +298,56 @@ public class PublitioVersions {
     }
 
     /**
+     * This endpoint re-converts specific file version info based on it's id.
+     * Useful for failed versions re-creation.
+     *
+     * @param versionID Unique alphanumeric name (id) of version.
+     * @param callback  It is used to provide success or failure response.
+     */
+    public void reconvertVersion(String versionID, final PublitioCallback<JsonObject> callback) {
+
+        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+            return;
+
+        SHAGenerator shaGenerator = new SHAGenerator();
+
+        ApiInterface apiService = APIClient.getClient().create(ApiInterface.class);
+
+        Map<String, String> apiParams = new HashMap<>();
+        apiParams.put(Constant.API_SIGNATURE, shaGenerator.getApiSignature());
+        apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
+        apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
+        apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
+
+        if (NetworkService.isNetworkAvailable(mContext)) {
+            Call<JsonObject> call = apiService.callReconvertVersion(versionID, apiParams);
+            call.enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                    if (response.body() != null) {
+                        callback.success(response.body().getAsJsonObject());
+                    } else if (response.errorBody() != null) {
+                        try {
+                            callback.failure(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    callback.failure(t.getMessage());
+                }
+            });
+        } else {
+            callback.failure(mContext.getString(R.string.no_network_found));
+        }
+
+    }
+
+    /**
      * This endpoint deletes specific file version based on it's id.
      *
      * @param versionID Unique alphanumeric id of version.
@@ -313,6 +367,7 @@ public class PublitioVersions {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
 

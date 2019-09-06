@@ -63,6 +63,7 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (optionalParams != null) {
             for (Map.Entry<String, String> entry : optionalParams.entrySet()) {
@@ -123,6 +124,7 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
 
@@ -179,6 +181,7 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (optionalParams != null) {
             for (Map.Entry<String, String> entry : optionalParams.entrySet()) {
@@ -241,6 +244,7 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
 
@@ -277,6 +281,7 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
      * Right now you can upload following file types:
      * Images:- jpg, jpeg, jpe, png, gif, bmp, psd, webp, ai, tif and tiff
      * Videos:- mp4, webm, ogv, avi, mov, flv, 3gp, 3g2, wmv, mpeg and mkv
+     * Audios:- mp3, wav, ogg, aac, aiff, amr, ac3, au, flac, m4a, aac, ra, voc and wma
      *
      * @param fileUri        Image or Video to upload as file.
      * @param optionalParams List of Optional API Params.
@@ -313,6 +318,7 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (optionalParams != null) {
             for (Map.Entry<String, String> entry : optionalParams.entrySet()) {

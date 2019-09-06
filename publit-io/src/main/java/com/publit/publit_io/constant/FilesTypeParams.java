@@ -24,4 +24,9 @@ public class FilesTypeParams {
      */
     public static final String VIDEO = "video";
 
+    /**
+     * Used for listing file with audio file status.
+     */
+    public static final String AUDIO = "audio";
+
 }

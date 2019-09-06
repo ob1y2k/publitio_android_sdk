@@ -83,6 +83,7 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (optionalParams != null) {
             for (Map.Entry<String, String> entry : optionalParams.entrySet()) {
@@ -141,6 +142,7 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
             Call<JsonObject> call = apiService.callWatermarksList(apiParams);
@@ -189,6 +191,7 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
 
@@ -243,6 +246,7 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (optionalParams != null) {
             for (Map.Entry<String, String> entry : optionalParams.entrySet()) {
@@ -297,6 +301,7 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
         apiParams.put(Constant.PUB_API_KEY, APIConfiguration.apiKey);
         apiParams.put(Constant.API_NONCE, shaGenerator.getApiNonce());
         apiParams.put(Constant.API_TIMESTAMP, shaGenerator.getApiTimeStamp());
+        apiParams.put(Constant.API_KIT, Constant.SDK_TYPE);
 
         if (NetworkService.isNetworkAvailable(mContext)) {
             Call<JsonObject> call = apiService.callDeleteWatermark(watermarkID, apiParams);

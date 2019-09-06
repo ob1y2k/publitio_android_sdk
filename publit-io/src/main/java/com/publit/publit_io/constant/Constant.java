@@ -51,6 +51,16 @@ public class Constant {
     public static final String API_TIMESTAMP = "api_timestamp";
 
     /**
+     * Used in all api calls to set value of api kit.
+     */
+    public static final String API_KIT = "api_kit";
+
+    /**
+     * Used in all api calls to set value of api kit.
+     */
+    public static final String SDK_TYPE = "android";
+
+    /**
      * Used to set width in create version api.
      */
     public static final String WIDTH_CONSTANT = "w_";
