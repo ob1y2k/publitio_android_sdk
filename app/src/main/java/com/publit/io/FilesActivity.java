@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -158,10 +159,10 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
 
                 Map<String, String> list = new HashMap<>();
                 list.put(FilesListParams.ORDER, OrderParams.NAME_ASC);
-                list.put(FilesListParams.FILTER_PRIVACY, FilesPrivacyFilterParams.PRIVATE);
-                list.put(FilesListParams.FILTER_EXTENSION, FilesExtensionParams.PNG);
-                list.put(FilesListParams.FILTER_TYPE, FilesTypeParams.VIDEO);
-                list.put(FilesListParams.FILTER_AD, FilesADFilterParams.NEW);
+//                list.put(FilesListParams.FILTER_PRIVACY, FilesPrivacyFilterParams.PRIVATE);
+//                list.put(FilesListParams.FILTER_EXTENSION, FilesExtensionParams.PNG);
+//                list.put(FilesListParams.FILTER_TYPE, FilesTypeParams.VIDEO);
+//                list.put(FilesListParams.FILTER_AD, FilesADFilterParams.NEW);
 
                 //Calling Publit.io files list api.
                 mPublitio.files().filesList(list, new PublitioCallback<JsonObject>() {
@@ -482,6 +483,7 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
                         mTextViewResponse.setText("");
                         mTextViewResponse.setText(result.toString());
                         dialog.dismiss();
+                        Log.d("Publitio", "file uploaded: " + result.toString());
                     }
 
                     @Override
@@ -489,6 +491,9 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
                         mTextViewResponse.setText("");
                         mTextViewResponse.setText(message);
                         dialog.dismiss();
+
+                        Log.d("Publitio", "file upload error: " + message.toString());
+
                     }
                 });
             }
