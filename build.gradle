@@ -5,7 +5,7 @@ buildscript {
     repositories {
         maven { url "https://maven.google.com" }
         jcenter()
-        google()
+//        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.1'
@@ -22,7 +22,6 @@ allprojects {
 //        google()
         maven { url "https://maven.google.com" }
         jcenter()
-        google()
     }
 }
 
@@ -32,7 +31,7 @@ task clean(type: Delete) {
 
 ext {
     compileSdkVersion = 22
-    buildToolsVersion = '22.0.1'
+//    buildToolsVersion = '22.0.1'
     targetSdkVersion = 22
     minSdkVersion = 16
     versionCode = 28
