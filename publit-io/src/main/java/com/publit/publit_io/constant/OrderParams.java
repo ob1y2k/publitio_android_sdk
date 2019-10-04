@@ -14,11 +14,11 @@ public class OrderParams {
      */
     public static final String DATE_ASC = "date:asc";
     /**
-     *Retrieve data in DATE_DESC order.
+     * Retrieve data in DATE_DESC order.
      */
     public static final String DATE_DESC = "date:desc";
     /**
-     *Retrieve data in NAME_ASC order.
+     * Retrieve data in NAME_ASC order.
      */
     public static final String NAME_ASC = "name:asc";
     /**

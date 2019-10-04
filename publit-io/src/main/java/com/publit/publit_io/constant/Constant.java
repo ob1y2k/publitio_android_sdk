@@ -91,8 +91,13 @@ public class Constant {
     public static final String START_OFFSET = "so_";
 
     /**
-     *Used to set end offset in create version api.
+     * Used to set end offset in create version api.
      */
     public static final String END_OFFSET = "eo_";
+
+    /**
+     * Used to check, If video compression is required or not.
+     */
+    public static boolean IS_COMPRESSED_VIDEO = false;
 
 }

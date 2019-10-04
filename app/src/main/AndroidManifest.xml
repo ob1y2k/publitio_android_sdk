@@ -21,7 +21,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".FilesActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".FoldersActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".VersionsActivity"
             android:screenOrientation="portrait"/>
 
         <!--ADD YOUR API KEY HERE-->

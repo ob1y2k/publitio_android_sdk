@@ -12,4 +12,9 @@
     <string name="provide_watermark_uri">Please provide Watermark URI and Name to call the API.</string>
     <string name="provide_watermark_id">Please provide Watermark ID to call the API.</string>
     <string name="provide_output_format">Please provide File ID and Output Extension to call the API.</string>
+    <string name="provide_folder_id">Please provide Folder ID to call the API.</string>
+    <string name="provide_folder_name">Please provide Folder Name to call the API.</string>
+    <string name="provide_version_id">Please provide Version ID to call the API.</string>
+    <string name="device_not_supported">Device Not Supported.</string>
+    <string name="validation_message">Please select resolution smaller than orignal video file.</string>
 </resources>

@@ -12,10 +12,6 @@ import android.widget.TextView;
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView mTextViewFiles;
-
-    private TextView mTextViewPlayers;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +26,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void init() {
 
         //Find views.
-        mTextViewFiles = findViewById(R.id.files_tv);
-        mTextViewPlayers = findViewById(R.id.players_tv);
+        TextView mTextViewFiles = findViewById(R.id.files_tv);
+        TextView mTextViewPlayers = findViewById(R.id.folders_tv);
+        TextView mTextViewVersions = findViewById(R.id.version_tv);
 
         //Initialize Click Listners.
         mTextViewFiles.setOnClickListener(this);
         mTextViewPlayers.setOnClickListener(this);
+        mTextViewVersions.setOnClickListener(this);
 
     }
 
@@ -48,7 +46,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, FilesActivity.class));
                 break;
 
-            case R.id.players_tv:
+            case R.id.folders_tv:
+                startActivity(new Intent(MainActivity.this, FoldersActivity.class));
+                break;
+
+            case R.id.version_tv:
+                startActivity(new Intent(MainActivity.this, VersionsActivity.class));
                 break;
         }
 

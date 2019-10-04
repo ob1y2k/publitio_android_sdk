@@ -34,7 +34,8 @@ public class PlayersSkinParams {
      */
     public static final String ORANGE = "orange";
 
-    /**Set Player colorThe constant INVERTED.
+    /**
+     * Set Player colorThe constant INVERTED.
      */
     public static final String INVERTED = "inverted";
 

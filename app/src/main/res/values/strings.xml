@@ -1,14 +1,17 @@
 <resources>
-    <string name="app_name">IO</string>
+    <string name="app_name">Publitio</string>
     <string name="choose_file">Choose File</string>
     <string name="files"><u>Files</u></string>
+    <string name="folders"><u>Folders</u></string>
     <string name="players"><u>Players</u></string>
+    <string name="version"><u>Versions</u></string>
     <string name="publitio_logo">Publitio Logo</string>
     <string name="create"><u>Create</u></string>
     <string name="list"><u>List</u></string>
     <string name="show"><u>Show</u></string>
     <string name="update"><u>Update</u></string>
     <string name="delete"><u>Delete</u></string>
+    <string name="reconvert"><u>Reconvert</u></string>
     <string name="image">Image</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
@@ -17,7 +20,12 @@
     <string name="enter_id">Enter ID</string>
     <string name="ok">OK</string>
     <string name="provide_id">Please Provide File Id to call API.</string>
+    <string name="version_id">Please Provide Version Id to call API.</string>
+    <string name="extension_id">Please provide file id and file extension to call API.</string>
     <string name="call_api_message">Calling Publit.io List API.</string>
     <string name="upload_api_call">Calling Publit.io Upload API.</string>
     <string name="enter_title">Enter Title</string>
+    <string name="tree">Tree</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_extension">Enter Extension</string>
 </resources>

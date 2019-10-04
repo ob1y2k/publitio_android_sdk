@@ -4,6 +4,7 @@ package com.publit.publit_io.utils;
 import android.app.Activity;
 
 import com.publit.publit_io.files.PublitioFiles;
+import com.publit.publit_io.folders.PublitioFolders;
 import com.publit.publit_io.players.PublitioPlayers;
 import com.publit.publit_io.versions.PublitioVersions;
 import com.publit.publit_io.watermarks.PublitioWaterMarks;
@@ -63,5 +64,14 @@ public class Publitio {
      */
     public PublitioVersions versions() {
         return new PublitioVersions(mActivity.getApplicationContext());
+    }
+
+    /**
+     * Gives the folders object to call publit.io folders api's.
+     *
+     * @return the publitio folders object.
+     */
+    public PublitioFolders folders() {
+        return new PublitioFolders(mActivity.getApplicationContext());
     }
 }

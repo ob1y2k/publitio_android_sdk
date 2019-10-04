@@ -35,12 +35,24 @@
             android:textSize="28sp" />
 
         <TextView
-            android:id="@+id/players_tv"
+            android:id="@+id/folders_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|top"
-            android:text="@string/players"
-            android:visibility="invisible"
+            android:text="@string/folders"
+            android:visibility="visible"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:textColor="@android:color/black"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/version_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|top"
+            android:text="@string/version"
+            android:visibility="visible"
+            android:layout_marginBottom="@dimen/margin_20"
             android:textColor="@android:color/black"
             android:textSize="28sp" />
     </LinearLayout>

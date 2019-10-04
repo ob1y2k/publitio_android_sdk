@@ -39,4 +39,19 @@ public class Constants {
      */
     public static final String DELETE_API = "Delete";
 
+    /**
+     * The constant CREATE_API.
+     */
+    public static final String CREATE_API = "Create";
+
+    /**
+     * The constant LIST_API.
+     */
+    public static final String LIST_API = "list";
+
+    /**
+     * The constant RECONVERT_API.
+     */
+    public static final String RECONVERT_API = "reconvert";
+
 }

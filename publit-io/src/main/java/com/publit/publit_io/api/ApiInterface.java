@@ -96,4 +96,25 @@ public interface ApiInterface {
 
     @DELETE("v1/files/versions/delete/{id}")
     Call<JsonObject> callDeleteVersion(@Path("id") String id, @QueryMap Map<String, String> options);
+
+    //Folders Operations API
+
+    @POST("v1/folders/create")
+    Call<JsonObject> callCreateFolder(@Query("name") String folderName, @QueryMap Map<String, String> options);
+
+    @GET("v1/folders/list")
+    Call<JsonObject> callFoldersList(@QueryMap Map<String, String> options);
+
+    @GET("v1/folders/show/{id}")
+    Call<JsonObject> callShowFolder(@Path("id") String id, @QueryMap Map<String, String> options);
+
+    @PUT("v1/folders/update/{id}")
+    Call<JsonObject> callUpdateFolder(@Path("id") String id, @QueryMap Map<String, String> options);
+
+    @DELETE("v1/folders/delete/{id}")
+    Call<JsonObject> callDeleteFolder(@Path("id") String id, @QueryMap Map<String, String> options);
+
+    @GET("v1/folders/tree")
+    Call<JsonObject> callTreeFolder(@QueryMap Map<String, String> options);
+
 }

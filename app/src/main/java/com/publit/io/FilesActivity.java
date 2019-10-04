@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -26,17 +25,15 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.publit.io.constant.Constants;
 import com.publit.publit_io.constant.CreateFileParams;
-import com.publit.publit_io.constant.FilesADFilterParams;
 import com.publit.publit_io.constant.FilesADParams;
 import com.publit.publit_io.constant.FilesDownloadParams;
-import com.publit.publit_io.constant.FilesExtensionParams;
 import com.publit.publit_io.constant.FilesListParams;
-import com.publit.publit_io.constant.FilesPrivacyFilterParams;
 import com.publit.publit_io.constant.FilesPrivacyParams;
+import com.publit.publit_io.constant.FilesResolutions;
 import com.publit.publit_io.constant.FilesTransformationParams;
-import com.publit.publit_io.constant.FilesTypeParams;
 import com.publit.publit_io.constant.OrderParams;
 import com.publit.publit_io.constant.UpdateFileParams;
+import com.publit.publit_io.exception.PublitioExceptions;
 import com.publit.publit_io.utils.Publitio;
 import com.publit.publit_io.utils.PublitioCallback;
 
@@ -49,11 +46,6 @@ import java.util.Map;
  */
 public class FilesActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView mTextViewCreate;
-    private TextView mTextViewList;
-    private TextView mTextViewShow;
-    private TextView mTextViewUpdate;
-    private TextView mTextViewDelete;
     private TextView mTextViewResponse;
     private ProgressDialog dialog;
 
@@ -66,13 +58,6 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
     //Custom Dialog for User Inputs.
     private Dialog mDialogUserInput;
 
-    //Custom Dialog UI components.
-    private LinearLayout mLinearLayoutCamera;
-    private LinearLayout mLinearLayoutGallery;
-    private TextView mTextViewCancel;
-    private TextView mTextViewOk;
-    private TextView mTextViewImage;
-    private TextView mTextViewVideo;
     private EditText mEditTextUserInput;
     private EditText mEditTextUserInputTitle;
 
@@ -96,13 +81,14 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
         mPublitio = new Publitio(this);
 
         dialog = new ProgressDialog(this);
+        dialog.setCancelable(false);
 
         //Find views.
-        mTextViewCreate = findViewById(R.id.create_tv);
-        mTextViewList = findViewById(R.id.list_tv);
-        mTextViewShow = findViewById(R.id.show_tv);
-        mTextViewUpdate = findViewById(R.id.update_tv);
-        mTextViewDelete = findViewById(R.id.delete_tv);
+        TextView mTextViewCreate = findViewById(R.id.create_tv);
+        TextView mTextViewList = findViewById(R.id.list_tv);
+        TextView mTextViewShow = findViewById(R.id.show_tv);
+        TextView mTextViewUpdate = findViewById(R.id.update_tv);
+        TextView mTextViewDelete = findViewById(R.id.delete_tv);
         mTextViewResponse = findViewById(R.id.response_tv);
 
         //Initialize Click Listners.
@@ -125,9 +111,10 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
                 mDialogChooseFile.setContentView(inflater.inflate(R.layout.dialog_choose_file, null));
                 mDialogChooseFile.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-                mLinearLayoutCamera = mDialogChooseFile.findViewById(R.id.profile_camera);
-                mLinearLayoutGallery = mDialogChooseFile.findViewById(R.id.profile_gallery);
-                mTextViewCancel = mDialogChooseFile.findViewById(R.id.profile_cancel);
+                //Custom Dialog UI components.
+                LinearLayout mLinearLayoutCamera = mDialogChooseFile.findViewById(R.id.profile_camera);
+                LinearLayout mLinearLayoutGallery = mDialogChooseFile.findViewById(R.id.profile_gallery);
+                TextView mTextViewCancel = mDialogChooseFile.findViewById(R.id.profile_cancel);
                 mLinearLayoutCamera.setOnClickListener(this);
                 mLinearLayoutGallery.setOnClickListener(this);
 
@@ -159,10 +146,10 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
 
                 Map<String, String> list = new HashMap<>();
                 list.put(FilesListParams.ORDER, OrderParams.NAME_ASC);
-//                list.put(FilesListParams.FILTER_PRIVACY, FilesPrivacyFilterParams.PRIVATE);
-//                list.put(FilesListParams.FILTER_EXTENSION, FilesExtensionParams.PNG);
-//                list.put(FilesListParams.FILTER_TYPE, FilesTypeParams.VIDEO);
-//                list.put(FilesListParams.FILTER_AD, FilesADFilterParams.NEW);
+//                list.put(FilesListParams.FILTER_PRIVACY, FilesPrivacyFilterParams.ALL);
+//                list.put(FilesListParams.FILTER_EXTENSION, FilesExtensionParams.JPE);
+//                list.put(FilesListParams.FILTER_TYPE, FilesTypeParams.IMAGE);
+//                list.put(FilesListParams.FILTER_AD, FilesADFilterParams.ALL);
 
                 //Calling Publit.io files list api.
                 mPublitio.files().filesList(list, new PublitioCallback<JsonObject>() {
@@ -203,8 +190,8 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
                 mDialogChooseFormate.setContentView(inflaters.inflate(R.layout.dialog_choose_format, null));
                 mDialogChooseFormate.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-                mTextViewImage = mDialogChooseFormate.findViewById(R.id.image_tv);
-                mTextViewVideo = mDialogChooseFormate.findViewById(R.id.video_tv);
+                TextView mTextViewImage = mDialogChooseFormate.findViewById(R.id.image_tv);
+                TextView mTextViewVideo = mDialogChooseFormate.findViewById(R.id.video_tv);
 
                 mTextViewImage.setOnClickListener(this);
                 mTextViewVideo.setOnClickListener(this);
@@ -285,7 +272,7 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
 
         mEditTextUserInput = mDialogUserInput.findViewById(R.id.user_input_tv);
         mEditTextUserInputTitle = mDialogUserInput.findViewById(R.id.user_input_title_tv);
-        mTextViewOk = mDialogUserInput.findViewById(R.id.profile_ok);
+        TextView mTextViewOk = mDialogUserInput.findViewById(R.id.profile_ok);
 
         if (operation.equals(Constants.UPDATE_API)) {
             mEditTextUserInputTitle.setVisibility(View.VISIBLE);
@@ -443,7 +430,7 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
     /**
      * Get URI of the Captured Image.
      *
-     * @param inContext
+     * @param inContext Activity context.
      * @param inImage   Bitmap of captured image.
      * @return URI of the Captured Image.
      */
@@ -474,28 +461,31 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
                 create.put(CreateFileParams.OPTION_DOWNLOAD, FilesDownloadParams.DISABLE);
                 create.put(CreateFileParams.OPTION_TRANSFORM, FilesTransformationParams.DISABLE);
                 create.put(CreateFileParams.OPTION_AD, FilesADParams.ENABLE);
+                create.put(CreateFileParams.RESOLUTION, FilesResolutions.RES_640X480);
 //                create.put(FilesContants.CreateFile.TITLE, "PICK_IMAGE");
 
                 //Calling Publit.io upload file api.
-                mPublitio.files().uploadFile(uri, create, new PublitioCallback<JsonObject>() {
-                    @Override
-                    public void success(JsonObject result) {
-                        mTextViewResponse.setText("");
-                        mTextViewResponse.setText(result.toString());
-                        dialog.dismiss();
-                        Log.d("Publitio", "file uploaded: " + result.toString());
-                    }
+                try {
+                    mPublitio.files().uploadFile(uri, create, new PublitioCallback<JsonObject>() {
+                        @Override
+                        public void success(JsonObject result) {
+                            mTextViewResponse.setText("");
+                            mTextViewResponse.setText(result.toString());
+                            dialog.dismiss();
+                        }
 
-                    @Override
-                    public void failure(String message) {
-                        mTextViewResponse.setText("");
-                        mTextViewResponse.setText(message);
-                        dialog.dismiss();
-
-                        Log.d("Publitio", "file upload error: " + message.toString());
-
-                    }
-                });
+                        @Override
+                        public void failure(String message) {
+                            mTextViewResponse.setText("");
+                            mTextViewResponse.setText(message);
+                            dialog.dismiss();
+                        }
+                    });
+                } catch (PublitioExceptions publitioExceptions) {
+                    mTextViewResponse.setText("");
+                    mTextViewResponse.setText(publitioExceptions.toString());
+                    dialog.dismiss();
+                }
             }
 
         } else if (requestCode == Constants.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -517,25 +507,33 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
                 create.put(CreateFileParams.OPTION_DOWNLOAD, FilesDownloadParams.ENABLE);
                 create.put(CreateFileParams.OPTION_TRANSFORM, FilesTransformationParams.ENABLE);
                 create.put(CreateFileParams.OPTION_AD, FilesADParams.NEW);
+                create.put(CreateFileParams.RESOLUTION, FilesResolutions.RES_640X480);
+
 //                create.put(CreateFileParams.TITLE, "CAPTURE_IMAGE");
 
 
                 //Calling Publit.io upload file api.
-                mPublitio.files().uploadFile(uri, create, new PublitioCallback<JsonObject>() {
-                    @Override
-                    public void success(JsonObject result) {
-                        mTextViewResponse.setText("");
-                        mTextViewResponse.setText(result.toString());
-                        dialog.dismiss();
-                    }
+                try {
+                    mPublitio.files().uploadFile(uri, create, new PublitioCallback<JsonObject>() {
+                        @Override
+                        public void success(JsonObject result) {
+                            mTextViewResponse.setText("");
+                            mTextViewResponse.setText(result.toString());
+                            dialog.dismiss();
+                        }
 
-                    @Override
-                    public void failure(String message) {
-                        mTextViewResponse.setText("");
-                        mTextViewResponse.setText(message);
-                        dialog.dismiss();
-                    }
-                });
+                        @Override
+                        public void failure(String message) {
+                            mTextViewResponse.setText("");
+                            mTextViewResponse.setText(message);
+                            dialog.dismiss();
+                        }
+                    });
+                } catch (PublitioExceptions publitioExceptions) {
+                    mTextViewResponse.setText("");
+                    mTextViewResponse.setText(publitioExceptions.toString());
+                    dialog.dismiss();
+                }
             }
         }
     }

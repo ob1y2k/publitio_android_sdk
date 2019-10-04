@@ -62,4 +62,14 @@ public class CreateFileParams {
      * Unique alphanumeric id of watermark.
      */
     public static final String WM = "wm";
+
+    /**
+     * Set resolution for the video compression.
+     */
+    public static final String RESOLUTION = "resolution";
+
+    /**
+     * Set bitrate for the video compression.
+     */
+    public static final String BITRATE = "bitrate";
 }
