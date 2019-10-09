@@ -46,7 +46,7 @@ Steps to Integrate SDK into App:
 Include this into your project gradel
 
 ```java
-compile "com.publit.io:publit-io:0.0.2"
+compile "com.publit.io:publit-io:0.0.3"
 ```
 
 Enter API Secret and API key into manifest as follow.
