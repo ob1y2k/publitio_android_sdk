@@ -53,8 +53,9 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
      */
     public void uploadWatermark(Uri fileUri, String watermarkName, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (fileUri == null || watermarkName == null) {
             callback.failure(mContext.getString(R.string.provide_watermark_uri));
@@ -130,8 +131,9 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
      */
     public void watermarksList(final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         SHAGenerator shaGenerator = new SHAGenerator();
 
@@ -179,8 +181,9 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
      */
     public void showWatermark(String watermarkID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         SHAGenerator shaGenerator = new SHAGenerator();
 
@@ -230,8 +233,9 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
      */
     public void updateWatermark(String watermarkID, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (watermarkID == null) {
             callback.failure(mContext.getString(R.string.provide_watermark_id));
@@ -289,8 +293,9 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
      */
     public void deleteWatermark(String watermarkID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         SHAGenerator shaGenerator = new SHAGenerator();
 
@@ -338,5 +343,19 @@ public class PublitioWaterMarks implements ProgressRequestBody.UploadCallbacks {
     @Override
     public void onFinish() {
 //        LogUtils.LOGD("Progress: ", " Completed");
+    }
+
+    /**
+     * To validate api key and api secret.
+     *
+     * @param callback It is used to provide success or failure response.
+     * @return validation before api call.
+     */
+    private boolean isValidated(PublitioCallback<JsonObject> callback) {
+        if (APIConfiguration.apiSecret == null || APIConfiguration.apiSecret.isEmpty() || APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty()) {
+            callback.failure(mContext.getResources().getString(R.string.key_or_secret_not_found));
+            return false;
+        }
+        return true;
     }
 }

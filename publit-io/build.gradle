@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/ob1y2k/publitio_android_sdk'
     gitUrl = 'https://github.com/ob1y2k/publitio_android_sdk.git'
 
-    libraryVersion = '0.0.3'
+    libraryVersion = '0.0.4'
 
     developerId = 'publitio'
     developerName = 'publitio'
@@ -37,7 +37,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -55,7 +55,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation project(':FFmpegAndroid')
+    implementation project(':videocompressor')
     compileOnly 'javax.annotation:jsr250-api:1.0'
 }
 

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.publit.publit_io.utils.APIConfiguration;
+
 /**
  * Class to show Publit.io API's calling.
  */
@@ -24,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Performe Initialization.
      */
     private void init() {
+
+        APIConfiguration.apiKey = "YOUR_API_KEY";
+        APIConfiguration.apiSecret = "YOUR_API_SECRET";
 
         //Find views.
         TextView mTextViewFiles = findViewById(R.id.files_tv);

@@ -3,7 +3,7 @@
     <string name="no_network_found">No Network Found. Please Check Your Network Connection.</string>
     <string name="internal_storage">Internal storage</string>
     <string name="choose_png_or_jpg">Please Upload only png and jpg as your Watermarks</string>
-    <string name="key_or_secret_not_found">Publitio API key or API secret not set in your Android Manifest.</string>
+    <string name="key_or_secret_not_found">Publitio API key or API secret is not set.</string>
     <string name="failed_to_load_meta_data">Failed to load meta-data</string>
     <string name="provide_file_id">Please provide File ID to call the API.</string>
     <string name="provide_file_uri">Please provide File URI to call the API.</string>

@@ -31,16 +31,6 @@
         <activity android:name=".VersionsActivity"
             android:screenOrientation="portrait"/>
 
-        <!--ADD YOUR API KEY HERE-->
-        <meta-data
-            android:name="publitio_api_key"
-            android:value="YOUR_API_KEY" />
-
-        <!--ADD YOUR API SECRET HERE-->
-        <meta-data
-            android:name="publitio_api_secret"
-            android:value="YOUR_API_SECRET" />
-
     </application>
 
 </manifest>

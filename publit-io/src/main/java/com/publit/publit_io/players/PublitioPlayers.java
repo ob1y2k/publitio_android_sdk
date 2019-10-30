@@ -42,8 +42,9 @@ public class PublitioPlayers {
      */
     public void createPlayer(String playerName, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (playerName == null) {
             callback.failure(mContext.getString(R.string.provide_player_name));
@@ -102,8 +103,9 @@ public class PublitioPlayers {
      */
     public void playersList(final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         SHAGenerator shaGenerator = new SHAGenerator();
 
@@ -152,8 +154,9 @@ public class PublitioPlayers {
      */
     public void showPlayer(String playerID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         SHAGenerator shaGenerator = new SHAGenerator();
 
@@ -202,8 +205,9 @@ public class PublitioPlayers {
      */
     public void updatePlayer(String playerID, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (playerID == null) {
             callback.failure(mContext.getString(R.string.provide_player_id));
@@ -262,8 +266,9 @@ public class PublitioPlayers {
      */
     public void deletePlayer(String playerID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         SHAGenerator shaGenerator = new SHAGenerator();
 
@@ -302,4 +307,17 @@ public class PublitioPlayers {
         }
     }
 
+    /**
+     * To validate api key and api secret.
+     *
+     * @param callback It is used to provide success or failure response.
+     * @return validation before api call.
+     */
+    private boolean isValidated(PublitioCallback<JsonObject> callback) {
+        if (APIConfiguration.apiSecret == null || APIConfiguration.apiSecret.isEmpty() || APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty()) {
+            callback.failure(mContext.getResources().getString(R.string.key_or_secret_not_found));
+            return false;
+        }
+        return true;
+    }
 }

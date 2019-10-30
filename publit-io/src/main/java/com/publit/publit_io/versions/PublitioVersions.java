@@ -48,8 +48,9 @@ public class PublitioVersions {
      */
     public void createVersion(String fileId, String outputFormat, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (fileId == null || outputFormat == null) {
             callback.failure(mContext.getString(R.string.provide_output_format));
@@ -149,8 +150,9 @@ public class PublitioVersions {
      */
     public void versionsList(String fileID, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (fileID == null) {
             callback.failure(mContext.getString(R.string.provide_file_id));
@@ -210,8 +212,9 @@ public class PublitioVersions {
      */
     public void showVersion(String versionID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (versionID == null || versionID.isEmpty()) {
             callback.failure(mContext.getString(R.string.provide_version_id));
@@ -264,8 +267,9 @@ public class PublitioVersions {
      */
     public void updateVersion(String versionID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (versionID == null || versionID.isEmpty()) {
             callback.failure(mContext.getString(R.string.provide_version_id));
@@ -319,8 +323,9 @@ public class PublitioVersions {
      */
     public void reconvertVersion(String versionID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (versionID == null || versionID.isEmpty()) {
             callback.failure(mContext.getString(R.string.provide_version_id));
@@ -373,8 +378,9 @@ public class PublitioVersions {
      */
     public void deleteVersion(String versionID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (versionID == null || versionID.isEmpty()) {
             callback.failure(mContext.getString(R.string.provide_version_id));
@@ -417,5 +423,19 @@ public class PublitioVersions {
         } else {
             callback.failure(mContext.getString(R.string.no_network_found));
         }
+    }
+
+    /**
+     * To validate api key and api secret.
+     *
+     * @param callback It is used to provide success or failure response.
+     * @return validation before api call.
+     */
+    private boolean isValidated(PublitioCallback<JsonObject> callback) {
+        if (APIConfiguration.apiSecret == null || APIConfiguration.apiSecret.isEmpty() || APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty()) {
+            callback.failure(mContext.getResources().getString(R.string.key_or_secret_not_found));
+            return false;
+        }
+        return true;
     }
 }

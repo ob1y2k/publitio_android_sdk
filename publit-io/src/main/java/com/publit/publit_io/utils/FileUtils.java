@@ -28,6 +28,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import java.io.File;
@@ -266,6 +268,7 @@ public class FileUtils {
             // ExternalStorageProvider
             else if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
+                Log.e("FileUtils","External: " + docId);
                 final String[] split = docId.split(":");
                 final String type = split[0];
 
@@ -279,10 +282,18 @@ public class FileUtils {
             else if (isDownloadsDocument(uri)) {
 
                 final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-
-                return getDataColumn(context, contentUri, null, null);
+                if (!TextUtils.isEmpty(id)) {
+                    if (id.startsWith("raw:")) {
+                        return id.replaceFirst("raw:", "");
+                    }
+                    try {
+                        final Uri contentUri = ContentUris.withAppendedId(
+                                Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                        return getDataColumn(context, contentUri, null, null);
+                    } catch (NumberFormatException e) {
+                        return null;
+                    }
+                }
             }
             // MediaProvider
             else if (isMediaDocument(uri)) {

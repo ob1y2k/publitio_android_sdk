@@ -46,21 +46,16 @@ Steps to Integrate SDK into App:
 Include this into your project gradel
 
 ```java
-compile "com.publit.io:publit-io:0.0.3"
+compile "com.publit.io:publit-io:0.0.4"
 ```
 
-Enter API Secret and API key into manifest as follow.
-Make changes in your AndroidManifest
+Enter API Secret and API key into the Main Activity as follow.
+Make changes in your "MainActivity.java"
 
 ```php
-<meta-data
-android:name="publitio_api_key"
-android:value="YOUR_API_KEY" />
+APIConfiguration.apiKey = "YOUR_API_KEY";
 
-
-<meta-data
-android:name="publitio_api_secret"
-android:value="YOUR_API_SECRET" />
+APIConfiguration.apiSecret = "YOUR_API_SECRET";
 ```
 
 Initialize Publitio SDK

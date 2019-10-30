@@ -42,8 +42,9 @@ public class PublitioFolders {
      */
     public void createFolder(String folderName, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (folderName == null || folderName.isEmpty()) {
             callback.failure(mContext.getString(R.string.provide_folder_name));
@@ -103,8 +104,9 @@ public class PublitioFolders {
      */
     public void foldersList(Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         SHAGenerator shaGenerator = new SHAGenerator();
 
@@ -158,8 +160,9 @@ public class PublitioFolders {
      */
     public void showFolder(String folderID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (folderID == null || folderID.isEmpty()) {
             callback.failure(mContext.getString(R.string.provide_folder_id));
@@ -213,8 +216,9 @@ public class PublitioFolders {
      */
     public void updateFolder(String folderID, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (folderID == null || folderID.isEmpty()) {
             callback.failure(mContext.getString(R.string.provide_folder_id));
@@ -275,8 +279,9 @@ public class PublitioFolders {
      */
     public void deleteFolder(String folderID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (folderID == null || folderID.isEmpty()) {
             callback.failure(mContext.getString(R.string.provide_folder_id));
@@ -329,8 +334,9 @@ public class PublitioFolders {
      */
     public void treeFolders(final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         SHAGenerator shaGenerator = new SHAGenerator();
 
@@ -369,5 +375,19 @@ public class PublitioFolders {
         } else {
             callback.failure(mContext.getString(R.string.no_network_found));
         }
+    }
+
+    /**
+     * To validate api key and api secret.
+     *
+     * @param callback It is used to provide success or failure response.
+     * @return validation before api call.
+     */
+    private boolean isValidated(PublitioCallback<JsonObject> callback) {
+        if (APIConfiguration.apiSecret == null || APIConfiguration.apiSecret.isEmpty() || APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty()) {
+            callback.failure(mContext.getResources().getString(R.string.key_or_secret_not_found));
+            return false;
+        }
+        return true;
     }
 }

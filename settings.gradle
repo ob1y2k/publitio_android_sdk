@@ -1,1 +1,1 @@
-include ':app', ':publit-io', ':FFmpegAndroid'
+include ':app', ':publit-io', ':videocompressor'

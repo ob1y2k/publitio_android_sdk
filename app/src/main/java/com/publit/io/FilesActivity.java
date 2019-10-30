@@ -396,8 +396,9 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constants.PICK_IMAGE);
         } else {
             Intent intent = new Intent(Intent.ACTION_PICK);
-//            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("image/*,video/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            intent.setType("video/*");
             startActivityForResult(intent, Constants.PICK_IMAGE);
         }
 
@@ -461,7 +462,7 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
                 create.put(CreateFileParams.OPTION_DOWNLOAD, FilesDownloadParams.DISABLE);
                 create.put(CreateFileParams.OPTION_TRANSFORM, FilesTransformationParams.DISABLE);
                 create.put(CreateFileParams.OPTION_AD, FilesADParams.ENABLE);
-                create.put(CreateFileParams.RESOLUTION, FilesResolutions.RES_640X480);
+                create.put(CreateFileParams.RESOLUTION, FilesResolutions.RES_LOW);
 //                create.put(FilesContants.CreateFile.TITLE, "PICK_IMAGE");
 
                 //Calling Publit.io upload file api.
@@ -507,7 +508,7 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
                 create.put(CreateFileParams.OPTION_DOWNLOAD, FilesDownloadParams.ENABLE);
                 create.put(CreateFileParams.OPTION_TRANSFORM, FilesTransformationParams.ENABLE);
                 create.put(CreateFileParams.OPTION_AD, FilesADParams.NEW);
-                create.put(CreateFileParams.RESOLUTION, FilesResolutions.RES_640X480);
+                create.put(CreateFileParams.RESOLUTION, FilesResolutions.RES_LOW);
 
 //                create.put(CreateFileParams.TITLE, "CAPTURE_IMAGE");
 

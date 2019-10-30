@@ -2,15 +2,9 @@ package com.publit.publit_io.files;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.webkit.MimeTypeMap;
 
-import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
-import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.publit.publit_io.R;
@@ -20,6 +14,7 @@ import com.publit.publit_io.api.request.ProgressRequestBody;
 import com.publit.publit_io.constant.Constant;
 import com.publit.publit_io.constant.CreateFileParams;
 import com.publit.publit_io.constant.FilesExtensionParams;
+import com.publit.publit_io.constant.FilesResolutions;
 import com.publit.publit_io.exception.PublitioExceptions;
 import com.publit.publit_io.utils.APIConfiguration;
 import com.publit.publit_io.utils.FileUtils;
@@ -27,6 +22,7 @@ import com.publit.publit_io.utils.LogUtils;
 import com.publit.publit_io.utils.NetworkService;
 import com.publit.publit_io.utils.PublitioCallback;
 import com.publit.publit_io.utils.SHAGenerator;
+import com.vincent.videocompressor.VideoCompress;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,14 +42,11 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
 
     private Context mContext;
 
-    private FFmpeg ffmpeg;
-
     private String fileName;
 
     //Public Constructor
     public PublitioFiles(Context context) {
         mContext = context;
-        ffmpeg = FFmpeg.getInstance(mContext);
     }
 
 
@@ -65,9 +58,9 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
      */
     public void filesList(Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
-
+        }
         SHAGenerator shaGenerator = new SHAGenerator();
 
         ApiInterface apiService = APIClient.getClient().create(ApiInterface.class);
@@ -121,8 +114,9 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
      */
     public void showFile(String fileID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (fileID == null) {
             callback.failure(mContext.getString(R.string.provide_file_id));
@@ -178,8 +172,9 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
      */
     public void updateFile(String fileID, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (fileID == null) {
             callback.failure(mContext.getString(R.string.provide_file_id));
@@ -241,8 +236,9 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
      */
     public void deleteFile(String fileID, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         if (fileID == null) {
             callback.failure(mContext.getString(R.string.provide_file_id));
@@ -291,7 +287,6 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
 
     /**
      * This endpoint creates (uploads) new file.
-     * <p>
      * Right now you can upload following file types:
      * Images:- jpg, jpeg, jpe, png, gif, bmp, psd, webp, ai, tif and tiff
      * Videos:- mp4, webm, ogv, avi, mov, flv, 3gp, 3g2, wmv, mpeg and mkv
@@ -332,11 +327,6 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
                                 type.equals(FilesExtensionParams.MPEG) ||
                                 type.equals(FilesExtensionParams.MKV)) {
                             resolution = entry.getValue();
-                            if (!performValidations(resolution, fileUri)) {
-                                Constant.IS_COMPRESSED_VIDEO = false;
-                                throw new PublitioExceptions(mContext.getResources().getString(R.string.validation_message));
-                            }
-
                             Constant.IS_COMPRESSED_VIDEO = true;
                         }
                     }
@@ -346,110 +336,71 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
 
 
         if (Constant.IS_COMPRESSED_VIDEO) {
-            loadFFMpegBinary(file, resolution, optionalParams, callback);
+            compressVideo(file, resolution, optionalParams, callback);
         } else {
             uploadFileOnServer(fileUri, optionalParams, callback);
         }
 
     }
 
-    private boolean performValidations(String resolution, Uri fileUri) {
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-        retriever.setDataSource(mContext, fileUri);
-        int orignalFileWidth = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));
-        int orignalFileHeight = Integer.valueOf(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));
-        retriever.release();
-
-        String[] arr;
-        arr = resolution.split(":");
-        String selectedHeight = arr[0];
-        String selectedWidth = arr[1];
-
-        if (orignalFileHeight <= Integer.parseInt(selectedHeight) || orignalFileWidth <= Integer.parseInt(selectedWidth)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
     /**
-     * To check if device supports FFMPEG.
+     * To compress video.
      *
      * @param file           The file to be convert.
      * @param resolution     The resolution to compress video.
      * @param optionalParams List of Optional API Params.
      * @param callback       It is used to provide success or failure response.
      */
-    private void loadFFMpegBinary(final File file, final String resolution, final Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
-        try {
-            ffmpeg.loadBinary(new LoadBinaryResponseHandler() {
+    private void compressVideo(final File file, final String resolution, final Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
+        final File mydir = new File(mContext.getFilesDir(), "");
+        fileName = file.getName();
+
+        if (resolution.equals(FilesResolutions.RES_LOW)) {
+
+            VideoCompress.compressVideoLow(file.getAbsolutePath(), mydir.getAbsolutePath() + "/" + fileName, new VideoCompress.CompressListener() {
                 @Override
-                public void onFailure() {
-                    callback.failure(mContext.getResources().getString(R.string.device_not_supported));
+                public void onStart() {
+
                 }
 
                 @Override
                 public void onSuccess() {
-                    compressVideo(file, resolution, optionalParams, callback);
-                }
-            });
-        } catch (FFmpegNotSupportedException e) {
-            callback.failure(mContext.getResources().getString(R.string.device_not_supported));
-        }
-    }
-
-    /**
-     * To create video compressed command.
-     *
-     * @param file           The file to be convert.
-     * @param resolution     The resolution to compress video.
-     * @param optionalParams List of Optional API Params.
-     * @param callback       It is used to provide success or failure response.
-     */
-    private void compressVideo(File file, String resolution, Map<String, String> optionalParams, PublitioCallback<JsonObject> callback) {
-        File mydir = new File(mContext.getFilesDir(), "");
-        fileName = file.getName();
-        String cmd = "-y -i " + file.getAbsolutePath() + " -vf scale=" + resolution + " -c:v libx264 -preset veryslow -crf 24 " + mydir.getAbsolutePath() + "/" + fileName;
-        String[] command = cmd.split(" ");
-        executeCommand(command, mydir, file, optionalParams, callback);
-    }
-
-    /**
-     * To execute FFMPEG command.
-     *
-     * @param command        FFMPEG command to compress video.
-     * @param mydir          The file going to be create after conversion.
-     * @param file           The file to be convert.
-     * @param optionalParams List of Optional API Params.
-     * @param callback       It is used to provide success or failure response.
-     */
-    private void executeCommand(final String[] command, final File mydir, final File file, final Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
-        try {
-            ffmpeg.execute(command, new ExecuteBinaryResponseHandler() {
-                @Override
-                public void onFailure(String s) {
-                    callback.failure(s);
-                }
-
-                @Override
-                public void onSuccess(String s) {
                     uploadFileOnServer(Uri.fromFile(new File(mydir.getAbsolutePath() + "/" + file.getName())), optionalParams, callback);
                 }
 
                 @Override
-                public void onProgress(String s) {
+                public void onFail() {
+
                 }
 
                 @Override
-                public void onStart() {
-                }
+                public void onProgress(float percent) {
 
-                @Override
-                public void onFinish() {
                 }
             });
-        } catch (FFmpegCommandAlreadyRunningException e) {
-            // do nothing for now
+        } else {
+
+            VideoCompress.compressVideoMedium(file.getAbsolutePath(), mydir.getAbsolutePath() + "/" + fileName, new VideoCompress.CompressListener() {
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onSuccess() {
+                    uploadFileOnServer(Uri.fromFile(new File(mydir.getAbsolutePath() + "/" + file.getName())), optionalParams, callback);
+                }
+
+                @Override
+                public void onFail() {
+
+                }
+
+                @Override
+                public void onProgress(float percent) {
+
+                }
+            });
         }
     }
 
@@ -462,8 +413,9 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
      */
     private void uploadFileOnServer(Uri fileUri, Map<String, String> optionalParams, final PublitioCallback<JsonObject> callback) {
 
-        if (APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty())
+        if (!isValidated(callback)) {
             return;
+        }
 
         ApiInterface apiService = APIClient.getClient().create(ApiInterface.class);
 
@@ -571,5 +523,19 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
     @Override
     public void onFinish() {
 //        Log.d(TAG, "onFinish: " + "100%");
+    }
+
+    /**
+     * To validate api key and api secret.
+     *
+     * @param callback It is used to provide success or failure response.
+     * @return validation before api call.
+     */
+    private boolean isValidated(PublitioCallback<JsonObject> callback) {
+        if (APIConfiguration.apiSecret == null || APIConfiguration.apiSecret.isEmpty() || APIConfiguration.apiKey == null || APIConfiguration.apiKey.isEmpty()) {
+            callback.failure(mContext.getResources().getString(R.string.key_or_secret_not_found));
+            return false;
+        }
+        return true;
     }
 }

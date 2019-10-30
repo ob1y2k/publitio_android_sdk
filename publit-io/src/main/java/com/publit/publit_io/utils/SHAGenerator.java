@@ -92,12 +92,8 @@ public class SHAGenerator {
      */
     private boolean validateAPI(String apiKey, String apiSecret) throws PublitioExceptions {
 
-        if (apiKey == null || apiKey.isEmpty()) {
-            throw new PublitioExceptions("Please add publitio_api_key to your AndroidManifest.");
-        }
-
-        if (apiSecret == null || apiSecret.isEmpty()) {
-            throw new PublitioExceptions("Please add publitio_api_secret to your AndroidManifest.");
+        if (apiSecret == null || apiSecret.isEmpty() || apiKey == null || apiKey.isEmpty()) {
+            throw new PublitioExceptions("Publitio API key or API secret is not set.");
         }
 
         return true;
