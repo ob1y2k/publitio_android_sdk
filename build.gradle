@@ -34,3 +34,7 @@ ext {
     versionCode = 28
     versionName = "0.3.2"
 }
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+}
