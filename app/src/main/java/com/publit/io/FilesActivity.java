@@ -396,9 +396,9 @@ public class FilesActivity extends AppCompatActivity implements View.OnClickList
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constants.PICK_IMAGE);
         } else {
             Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            intent.setType("image/*");
-            intent.setType("video/*");
+//            intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*,video/*");
+
             startActivityForResult(intent, Constants.PICK_IMAGE);
         }
 
