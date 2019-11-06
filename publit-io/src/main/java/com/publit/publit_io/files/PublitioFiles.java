@@ -22,7 +22,7 @@ import com.publit.publit_io.utils.LogUtils;
 import com.publit.publit_io.utils.NetworkService;
 import com.publit.publit_io.utils.PublitioCallback;
 import com.publit.publit_io.utils.SHAGenerator;
-import com.vincent.videocompressor.VideoCompress;
+import com.publit.publit_io.videocompressor.VideoCompress;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.vincent.videocompressor;
+package com.publit.publit_io.videocompressor;
 
 import android.annotation.TargetApi;
 import android.opengl.EGL14;

@@ -1,6 +1,8 @@
-package com.vincent.videocompressor;
+package com.publit.publit_io.videocompressor;
 
 import android.os.AsyncTask;
+
+import static com.publit.publit_io.videocompressor.VideoController.COMPRESS_QUALITY_LOW;
 
 public class VideoCompress {
     private static final String TAG = VideoCompress.class.getSimpleName();
@@ -18,7 +20,7 @@ public class VideoCompress {
     }
 
     public static VideoCompressTask compressVideoLow(String srcPath, String destPath, CompressListener listener) {
-        VideoCompressTask task =  new VideoCompressTask(listener, VideoController.COMPRESS_QUALITY_LOW);
+        VideoCompressTask task =  new VideoCompressTask(listener, COMPRESS_QUALITY_LOW);
         task.execute(srcPath, destPath);
         return task;
     }

@@ -1,4 +1,4 @@
-package com.vincent.videocompressor;
+package com.publit.publit_io.videocompressor;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

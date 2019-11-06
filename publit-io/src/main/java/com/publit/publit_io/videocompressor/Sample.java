@@ -1,4 +1,4 @@
-package com.vincent.videocompressor;
+package com.publit.publit_io.videocompressor;
 
 public class Sample {
     private long offset = 0;

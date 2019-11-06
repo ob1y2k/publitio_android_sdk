@@ -1,1 +1,1 @@
-include ':app', ':publit-io', ':videocompressor'
+include ':app', ':publit-io'
