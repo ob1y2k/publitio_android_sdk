@@ -47,6 +47,8 @@ Include this into your project gradel
 
 ```java
 implementation "com.publit.io:publit-io:0.0.5"
+implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 ```
 
 Enter API Secret and API key into the Main Activity as follow.
