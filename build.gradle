@@ -3,12 +3,12 @@
 buildscript {
     ext.kotlin_version = '1.3.41'
     repositories {
-        maven { url "https://maven.google.com" }
+//        maven { url "https://maven.google.com" }
+        google()
         jcenter()
-//        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.1.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
@@ -17,24 +17,12 @@ buildscript {
 
 allprojects {
     repositories {
-//        google()
-        maven { url "https://maven.google.com" }
+        google()
+//        maven { url "https://maven.google.com" }
         jcenter()
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-ext {
-    compileSdkVersion = 22
-    targetSdkVersion = 22
-    minSdkVersion = 16
-    versionCode = 28
-    versionName = "0.3.2"
-}
-tasks.withType(Javadoc) {
-    options.addStringOption('Xdoclint:none', '-quiet')
-    options.addStringOption('encoding', 'UTF-8')
 }
