@@ -307,9 +307,7 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
         File file = FileUtils.getFile(mContext, fileUri);
         String resolution = "";
 
-        ContentResolver cR = mContext.getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        String type = mime.getExtensionFromMimeType(cR.getType(fileUri));
+        String type = getMimeType(mContext, fileUri);
 
         if (optionalParams != null) {
             for (Map.Entry<String, String> entry : optionalParams.entrySet()) {
@@ -492,11 +490,27 @@ public class PublitioFiles implements ProgressRequestBody.UploadCallbacks {
         if (Constant.IS_COMPRESSED_VIDEO) {
             type = arr[1];
         } else {
-            ContentResolver cR = mContext.getContentResolver();
-            MimeTypeMap mime = MimeTypeMap.getSingleton();
-            type = mime.getExtensionFromMimeType(cR.getType(fileUri));
+            type = getMimeType(mContext, fileUri);
         }
         return type;
+    }
+
+    public static String getMimeType(Context context, Uri uri) {
+        String extension;
+
+        //Check uri format to avoid null
+        if (uri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            //If scheme is a content
+            final MimeTypeMap mime = MimeTypeMap.getSingleton();
+            extension = mime.getExtensionFromMimeType(context.getContentResolver().getType(uri));
+        } else {
+            //If scheme is a File
+            //This will replace white spaces with %20 and also other special characters. This will avoid returning null values on file name with spaces and special characters.
+            extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString());
+
+        }
+
+        return extension;
     }
 
     /**
