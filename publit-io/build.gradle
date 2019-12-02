@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/ob1y2k/publitio_android_sdk'
     gitUrl = 'https://github.com/ob1y2k/publitio_android_sdk.git'
 
-    libraryVersion = '0.0.5'
+    libraryVersion = '0.0.6'
 
     developerId = 'publitio'
     developerName = 'publitio'
